@@ -88,6 +88,15 @@ const setCategories = () =>{
         <span class='cat'>${cat}</span>
         `
         ).join('')
+
+categoriesContainer.addEventListener('click', (e)=>{
+  const selectedCat = e.target.textContent;
+  
+  selectedCat === 'All'
+  ? displayProduct(data)
+  : displayProduct(data.filter((item)=>item.cat === selectedCat));
+});
+
 };
 setCategories()
 
