@@ -45,9 +45,10 @@ const data = [
 
 const productsContainer = document.querySelector('.products');
 const searchInput = document.querySelector('.search');
-const categoriesContainer = document.querySelector('.categories');
+const categoriesContainer = document.querySelector('.cats');
 const priceRange = document.querySelector('.priceRange');
-const priceValue = document.querySelector('.priceValue')
+const priceValue = document.querySelector('.priceValue');
+
 const displayProduct = (filteredProducts) =>{
     productsContainer.innerHTML = filteredProducts.map((product)=>
     `
@@ -57,7 +58,38 @@ const displayProduct = (filteredProducts) =>{
                 <span class="priceText">${product.price}</span>
             </div>
             `
-    )
+    ).join('');
 }
 
 displayProduct(data);
+
+searchInput.addEventListener('keyup', (e)=>{
+    const value = e.target.value.toLowerCase();
+
+    if(value){
+
+    displayProduct(data.filter(item=>item.name.toLowerCase().indexOf(value) !== -1))
+
+}else{
+    displayProduct(data);
+}
+});
+
+const setCategories = () =>{
+    const allCats = data.map(item=>item.cat)
+    const categories = [
+        'All', ...allCats.filter((item, i )=>{
+            return allCats.indexOf(item) ===i;
+        }),
+    ];
+
+    categoriesContainer.innerHTML = categories.map(cat=>
+        `
+        <span class='cat'>${cat}</span>
+        `
+        ).join('')
+};
+setCategories()
+
+
+
